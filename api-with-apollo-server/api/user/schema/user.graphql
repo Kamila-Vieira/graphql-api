@@ -2,7 +2,12 @@ const { gql } = require("apollo-server");
 
 const useSchema = gql`
   """ 
-  Representa o usuário da aplicação
+  scalar de data e hora
+  """
+  scalar DateTime
+  
+  """ 
+  Usuário da aplicação
   """
   type User {
     id: ID!
@@ -10,8 +15,22 @@ const useSchema = gql`
     ativo: Boolean! # Campo não pode ser nulo
     email: String
     role: Role!
+    createdAt: DateTime
   }
   
+  """ 
+  Input das nutations de criação e atualização de novos usuários
+  """
+  input UserInput{
+    nome: String
+    ativo: Boolean
+    email: String
+    role: RoleType
+  }
+  
+  """ 
+  Tipos de ocupação do usuário
+  """
   enum RoleType{
     ESTUDANTE
     DOCENTE
@@ -19,11 +38,34 @@ const useSchema = gql`
   }
   
   """ 
-  Representa a ocupação do usuário
+  Ocupação do usuário
   """
   type Role{
     id: ID!
     type: RoleType!
+  }
+  
+  interface CustomResponse{
+    # Tipo abstrato => não é usada diretamente no esquema, mas é uma base para a criação de outros tipos
+    code: Int!
+    message: String!
+  }
+  
+  type DeleteUserResponse implements CustomResponse {
+    code: Int!
+    message: String!
+  }
+  
+  type UpdateUserResponse implements CustomResponse {
+    code: Int!
+    message: String!
+    user: User!
+  }
+  
+  type CreateUserResponse implements CustomResponse {
+    code: Int!
+    message: String!
+    user: User!
   }
   
   """ 
@@ -36,10 +78,13 @@ const useSchema = gql`
     activeUsers: [User]
   }
   
+  """ 
+  Mutation root com a base de mutations a serem utilizadas na aplicação
+  """
   type Mutation{
-    createUser(nome: String!, ativo: Boolean!, email: String, role: RoleType!): User!
-    updateUser(id: ID!, nome: String, ativo: Boolean, email: String, role: RoleType): User!
-    deleteUser(id: ID!): ID!
+    createUser(input: UserInput, createdAt: DateTime): CreateUserResponse!
+    updateUser(id: ID!, input: UserInput): UpdateUserResponse!
+    deleteUser(id: ID!): DeleteUserResponse!
   }
 `;
 

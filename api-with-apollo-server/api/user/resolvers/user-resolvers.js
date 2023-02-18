@@ -1,4 +1,18 @@
+const { GraphQLScalarType } = require("graphql");
+
 const useResolvers = {
+  CustomResponse: {
+    __resolveType(_object, _context, _info) {
+      return false;
+    },
+  },
+  DateTime: new GraphQLScalarType({
+    name: "DateTime",
+    description: "string de data e hora no formato ISO-8601",
+    serialize: (value) => new Date(value).toISOString(), // Pega o dado da base de dados para a conversão
+    parseValue: (value) => new Date(value), // Pega o dado do input de variáveis para a conversão
+    parseLiteral: (ast) => new Date(ast.value), // Pega o dado do input de argumentos inline na query para a conversão
+  }),
   Query: {
     /**
      * _root: Resultado da consulta anterior
@@ -14,10 +28,10 @@ const useResolvers = {
   },
 
   Mutation: {
-    createUser: async (_root, user, { dataSources }, _info) =>
-      dataSources.usersAPI.createUser(user),
-    updateUser: async (_root, data, { dataSources }, _info) =>
-      dataSources.usersAPI.updateUser(data),
+    createUser: async (_root, { input, createdAt }, { dataSources }, _info) =>
+      dataSources.usersAPI.createUser({ ...input, createdAt }),
+    updateUser: async (_root, { id, input }, { dataSources }, _info) =>
+      dataSources.usersAPI.updateUser({ ...input, id }),
     deleteUser: async (_root, { id }, { dataSources }, _info) =>
       dataSources.usersAPI.deleteUser(id),
   },
