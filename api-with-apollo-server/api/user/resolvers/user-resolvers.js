@@ -12,6 +12,15 @@ const useResolvers = {
       dataSources.usersAPI.getUsersByRole(roleId),
     activeUsers: (_root, _args, { dataSources }) => dataSources.usersAPI.getActiveUsers(),
   },
+
+  Mutation: {
+    createUser: async (_root, user, { dataSources }, _info) =>
+      dataSources.usersAPI.createUser(user),
+    updateUser: async (_root, data, { dataSources }, _info) =>
+      dataSources.usersAPI.updateUser(data),
+    deleteUser: async (_root, { id }, { dataSources }, _info) =>
+      dataSources.usersAPI.deleteUser(id),
+  },
 };
 
 module.exports = useResolvers;

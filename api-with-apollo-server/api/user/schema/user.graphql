@@ -5,10 +5,17 @@ const useSchema = gql`
   Representa o usuário da aplicação
   """
   type User {
+    id: ID!
     nome: String! # Campo não pode ser nulo
     ativo: Boolean! # Campo não pode ser nulo
     email: String
     role: Role!
+  }
+  
+  enum RoleType{
+    ESTUDANTE
+    DOCENTE
+    COORDENACAO
   }
   
   """ 
@@ -16,7 +23,7 @@ const useSchema = gql`
   """
   type Role{
     id: ID!
-    type: String!
+    type: RoleType!
   }
   
   """ 
@@ -24,9 +31,15 @@ const useSchema = gql`
   """
   type Query{
     users: [User]
-    user(id: ID!): User
+    user(id: ID!): User!
     usersByRole(roleId: ID!): [User]
     activeUsers: [User]
+  }
+  
+  type Mutation{
+    createUser(nome: String!, ativo: Boolean!, email: String, role: RoleType!): User!
+    updateUser(id: ID!, nome: String, ativo: Boolean, email: String, role: RoleType): User!
+    deleteUser(id: ID!): ID!
   }
 `;
 
