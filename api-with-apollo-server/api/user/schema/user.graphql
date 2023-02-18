@@ -1,0 +1,33 @@
+const { gql } = require("apollo-server");
+
+const useSchema = gql`
+  """ 
+  Representa o usuário da aplicação
+  """
+  type User {
+    nome: String! # Campo não pode ser nulo
+    ativo: Boolean! # Campo não pode ser nulo
+    email: String
+    role: Role!
+  }
+  
+  """ 
+  Representa a ocupação do usuário
+  """
+  type Role{
+    id: ID!
+    type: String!
+  }
+  
+  """ 
+  Query root com a base de queries a serem utilizadas na aplicação
+  """
+  type Query{
+    users: [User]
+    user(id: ID!): User
+    usersByRole(roleId: ID!): [User]
+    activeUsers: [User]
+  }
+`;
+
+module.exports = useSchema
