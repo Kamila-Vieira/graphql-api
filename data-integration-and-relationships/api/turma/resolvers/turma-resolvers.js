@@ -10,7 +10,7 @@ const turmaResolvers = {
   }),
   Query: {
     turmas: (_parent, _args, { dataSources }) => dataSources.turmasAPI.getTurmas(),
-    turma: (_parent, { id }, { dataSources }) => dataSources.turmasAPI.getTurma(id),
+    turma: (_parent, { id }, { dataSources }) => dataSources.turmasAPI.getTurmaById(id),
   },
   Mutation: {
     createTurma: (_parent, { turma }, { dataSources }) => dataSources.turmasAPI.createTurma(turma),

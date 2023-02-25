@@ -10,12 +10,11 @@ class TurmasAPI extends SQLDataSource {
   }
 
   async getTurmas() {
-    return this.db.select("*").from("turmas");
+    return await this.db.select("*").from("turmas");
   }
 
-  async getTurma(id) {
-    const turma = await this.db.select("*").from("turmas").where("id", +id).first();
-    return turma;
+  async getTurmaById(id) {
+    return await this.db.select("*").from("turmas").where("id", +id).first();
   }
 
   async createTurma(turma) {
@@ -32,7 +31,7 @@ class TurmasAPI extends SQLDataSource {
       .where({ id: +id })
       .into("turmas");
 
-    const updatedTurma = await this.getTurma(id);
+    const updatedTurma = await this.getTurmaById(id);
     return {
       ...this.customResponse,
       turma: updatedTurma,

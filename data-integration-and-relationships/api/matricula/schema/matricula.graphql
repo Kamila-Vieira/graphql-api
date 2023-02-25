@@ -3,15 +3,10 @@ const { gql } = require("apollo-server");
 const matriculaSchema = gql`
   scalar DateTime
   
-  enum MatriculaStatus{
-    confirmado
-    cancelado
-  }
-  
   type Matricula {
     id: ID!
     createdAt: DateTime!
-    status: MatriculaStatus!
+    status: String!
     estudante: User!
     turma: Turma!
   }

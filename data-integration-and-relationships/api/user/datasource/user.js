@@ -28,8 +28,7 @@ class UsersAPI extends RESTDataSource {
   }
 
   async getUserRole(roleId) {
-    const role = await this.get(`/roles/${roleId}`);
-    return role;
+    return await this.get(`/roles/${roleId}`);
   }
 
   async createUser(user) {

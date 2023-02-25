@@ -23,7 +23,10 @@ class MatriculasAPI extends SQLDataSource {
 
   async matriculasPorTurma(turmaId) {
     const matriculas = await this.db.select("*").from("matriculas").where("turma_id", +turmaId);
-    return matriculas;
+    return matriculas.map(({ created_at, ...matricula }) => ({
+      ...matricula,
+      createdAt: created_at,
+    }));
   }
 
   async matriculasPorEstudante(estudanteId) {
@@ -31,7 +34,10 @@ class MatriculasAPI extends SQLDataSource {
       .select("*")
       .from("matriculas")
       .where("estudante_id", +estudanteId);
-    return matriculas;
+    return matriculas.map(({ created_at, ...matricula }) => ({
+      ...matricula,
+      createdAt: created_at,
+    }));
   }
 }
 
