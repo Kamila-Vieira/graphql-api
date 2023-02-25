@@ -6,6 +6,7 @@ const userResolvers = {
       return false;
     },
   },
+
   DateTime: new GraphQLScalarType({
     name: "DateTime",
     description: "string de data e hora no formato ISO-8601",
@@ -13,6 +14,7 @@ const userResolvers = {
     parseValue: (value) => new Date(value), // Pega o dado do input de variáveis para a conversão
     parseLiteral: (ast) => new Date(ast.value).toISOString(), // Pega o dado do input de argumentos inline na query para a conversão
   }),
+
   Query: {
     /**
      * _root: Resultado da consulta anterior
@@ -38,7 +40,7 @@ const userResolvers = {
 
   User: {
     matriculas: ({ id: estudanteId }, _args, { dataSources }) =>
-      dataSources.matriculasAPI.matriculasPorEstudante(estudanteId),
+      dataSources.matriculasAPI.matriculasPorEstudante.load(estudanteId),
     role: ({ role: roleId }, _args, { dataSources }) => dataSources.usersAPI.getUserRole(roleId),
   },
 };
