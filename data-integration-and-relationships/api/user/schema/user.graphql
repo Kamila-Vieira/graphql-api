@@ -15,7 +15,8 @@ const userSchema = gql`
     ativo: Boolean! # Campo não pode ser nulo
     email: String
     role: Role!
-    createdAt: DateTime!
+    createdAt: DateTime
+    matriculas: [Matricula]
   }
   
   """ 

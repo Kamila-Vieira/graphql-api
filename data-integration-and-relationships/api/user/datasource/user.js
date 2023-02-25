@@ -10,35 +10,32 @@ class UsersAPI extends RESTDataSource {
     };
   }
 
-  async getUsersUseCase(endpoint = "/users") {
-    const users = await this.get(endpoint);
-    return users.map(async (user) => ({
-      ...user,
-      role: await this.get(`/roles/${user.role}`),
-    }));
-  }
-
   async getUserById(id) {
     const user = await this.get(`/users/${id}`);
-    return { ...user, role: await this.get(`/roles/${user.role}`) };
+    return user;
   }
 
   async getUsers() {
-    return await this.getUsersUseCase();
+    return await this.get("/users");
   }
 
   async getUsersByRole(roleId) {
-    return await this.getUsersUseCase(`/users?role=${roleId}`);
+    return await this.get(`/users?role=${roleId}`);
   }
 
   async getActiveUsers() {
-    return await this.getUsersUseCase("/users?ativo=true");
+    return await this.get("/users?ativo=true");
+  }
+
+  async getUserRole(roleId) {
+    const role = await this.get(`/roles/${roleId}`);
+    return role;
   }
 
   async createUser(user) {
     const [role] = await this.get(`/roles?type=${user.role}`);
     const userCreated = await this.post("/users", { ...user, role: role.id });
-    return { ...this.successResponse, user: { ...userCreated, role } };
+    return { ...this.successResponse, user: userCreated };
   }
 
   async updateUser(data) {
@@ -54,7 +51,7 @@ class UsersAPI extends RESTDataSource {
     const userUpdated = await this.patch(`/users/${data.id}`, dataToUpdate);
     return {
       ...this.successResponse,
-      user: { ...userUpdated, role: await this.get(`/roles/${userUpdated.role}`) },
+      user: userUpdated,
     };
   }
 

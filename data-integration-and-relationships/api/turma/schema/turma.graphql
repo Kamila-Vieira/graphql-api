@@ -17,6 +17,7 @@ const turmaSchema = gql`
     inicio: DateTime
     docente: User!
     createdAt: DateTime!
+    matriculas: [Matricula]
   }
   
   input TurmaInput {
@@ -59,6 +60,8 @@ const turmaSchema = gql`
     updateTurma(id: ID!, turma: TurmaInput): UpdateResponse!
     deleteTurma(id: ID!): DeleteResponse!
   }
+  
+  
 `;
 
 module.exports = turmaSchema

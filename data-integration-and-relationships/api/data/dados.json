@@ -1,7 +1,7 @@
 {
   "users": [
     {
-      "id": 2,
+      "id": 1,
       "nome": "Ana Torre",
       "ativo": true,
       "email": "a@a.com",
@@ -12,7 +12,7 @@
       "nome": "Gabriel Costa",
       "ativo": true,
       "email": "g@g.com",
-      "role": 1
+      "role": 2
     },
     {
       "id": 3,
@@ -53,13 +53,21 @@
       "nome": "Carlos Vinicius",
       "ativo": true,
       "role": 2,
-      "id": 9
+      "id": 8
     },
     {
       "nome": "Ana Maria Menezes",
       "ativo": true,
       "email": "maria@teste.com",
       "role": 2,
+      "id": 9
+    },
+    {
+      "nome": "Gisele Santos",
+      "ativo": true,
+      "email": "g@s.com",
+      "role": 3,
+      "createdAt": "2023-02-18T00:00:00.000Z",
       "id": 10
     }
   ],

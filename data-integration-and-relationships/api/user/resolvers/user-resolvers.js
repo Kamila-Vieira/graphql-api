@@ -11,7 +11,7 @@ const userResolvers = {
     description: "string de data e hora no formato ISO-8601",
     serialize: (value) => new Date(value).toISOString(), // Pega o dado da base de dados para a conversão
     parseValue: (value) => new Date(value), // Pega o dado do input de variáveis para a conversão
-    parseLiteral: (ast) => new Date(ast.value), // Pega o dado do input de argumentos inline na query para a conversão
+    parseLiteral: (ast) => new Date(ast.value).toISOString(), // Pega o dado do input de argumentos inline na query para a conversão
   }),
   Query: {
     /**
@@ -34,6 +34,12 @@ const userResolvers = {
       dataSources.usersAPI.updateUser({ ...input, id }),
     deleteUser: async (_root, { id }, { dataSources }, _info) =>
       dataSources.usersAPI.deleteUser(id),
+  },
+
+  User: {
+    matriculas: ({ id: estudanteId }, _args, { dataSources }) =>
+      dataSources.matriculasAPI.matriculasPorEstudante(estudanteId),
+    role: ({ role: roleId }, _args, { dataSources }) => dataSources.usersAPI.getUserRole(roleId),
   },
 };
 

@@ -1,6 +1,6 @@
 const { SQLDataSource } = require("datasource-sql");
 
-class TurmasPI extends SQLDataSource {
+class TurmasAPI extends SQLDataSource {
   constructor(dbConfig) {
     super(dbConfig);
     this.customResponse = {
@@ -48,4 +48,4 @@ class TurmasPI extends SQLDataSource {
   }
 }
 
-module.exports = TurmasPI;
+module.exports = TurmasAPI;
