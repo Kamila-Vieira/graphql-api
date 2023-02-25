@@ -39,6 +39,20 @@ class MatriculasAPI extends SQLDataSource {
       createdAt: created_at,
     }));
   }
+
+  async deleteMatricula(matriculaId) {
+    await this.db("matriculas").where({ id: +matriculaId }).del();
+
+    this.customResponse.message = "Matrícula deletada com sucesso";
+    return this.customResponse;
+  }
+
+  async cancelMatricula(matriculaId) {
+    await this.db.update({ status: "cancelado" }).where({ id: +matriculaId }).into("matriculas");
+
+    this.customResponse.message = "Matrícula cancelada com sucesso";
+    return this.customResponse;
+  }
 }
 
 module.exports = MatriculasAPI;
