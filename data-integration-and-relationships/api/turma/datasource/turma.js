@@ -10,8 +10,8 @@ class TurmasAPI extends SQLDataSource {
     };
   }
 
-  async getTurmas() {
-    return await this.db.select("*").from("turmas");
+  async getTurmas({ page = 0, pageOffset = Infinity }) {
+    return await this.db.select("*").from("turmas").offset(page).limit(pageOffset);
   }
 
   getTurmasCarregadas = new DataLoader(async (idsTurmas) => {

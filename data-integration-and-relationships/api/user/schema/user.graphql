@@ -73,10 +73,10 @@ const userSchema = gql`
   Query root com a base de queries a serem utilizadas na aplicação
   """
   type Query{
-    users: [User]
+    users(page: Int, limit: Int): [User]
     user(id: ID!): User!
-    usersByRole(roleId: ID!): [User]
-    activeUsers: [User]
+    usersByRole(roleId: ID!, page: Int, limit: Int): [User]
+    activeUsers(page: Int, limit: Int): [User]
   }
   
   """ 

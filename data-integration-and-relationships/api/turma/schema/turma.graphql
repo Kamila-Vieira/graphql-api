@@ -48,7 +48,7 @@ const turmaSchema = gql`
   Query root com a base de queries a serem utilizadas na aplicação
   """
   type Query{
-    turmas: [Turma]
+    turmas(page: Int, pageOffset: Int): [Turma]
     turma(id: ID!): Turma!
   }
   

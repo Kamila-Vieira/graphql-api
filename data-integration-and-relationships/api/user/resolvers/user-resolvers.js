@@ -22,11 +22,10 @@ const userResolvers = {
      * context: Traz o contexto para ser trabalhado na query. Ex.: dados externos, dados relativos a autenticação de usuário, permissões, etc
      * _info: Representação em árvore da query. Traz tudo que o resolver precisa para saber o que tem que retornar
      * **/
-    users: (_root, _args, context, _info) => context.dataSources.usersAPI.getUsers(),
+    users: (_root, args, context, _info) => context.dataSources.usersAPI.getUsers(args),
     user: (_root, { id }, { dataSources }) => dataSources.usersAPI.getUserById(id),
-    usersByRole: (_root, { roleId }, { dataSources }) =>
-      dataSources.usersAPI.getUsersByRole(roleId),
-    activeUsers: (_root, _args, { dataSources }) => dataSources.usersAPI.getActiveUsers(),
+    usersByRole: (_root, args, { dataSources }) => dataSources.usersAPI.getUsersByRole(args),
+    activeUsers: (_root, args, { dataSources }) => dataSources.usersAPI.getActiveUsers(args),
   },
 
   Mutation: {
